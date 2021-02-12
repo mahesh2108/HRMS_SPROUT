@@ -16,20 +16,12 @@ namespace HRMS.Controllers
     {
         List<Employee> _oEmployees = new List<Employee>()
         {
-            new Employee(){Name="mahesh",BirthDate= DateTime.Now,TIN="123",EmployeeType="Regular"},
+            new Employee(){Name="mahesh",BirthDate= DateTime.Now,TIN="123",EmployeeType="Regular",Salary=1200.00},
             new Employee(){Name="chandra",BirthDate= DateTime.Now,TIN="111",EmployeeType="Contract",Salary=1200.00}
 
         };
 
-        //internal  List<Employee> _oEmployees;
-
-
-        //public EmployeeController()
-        //{
-        //    _oEmployees = new List<Employee>();
-        //}
-
-
+       
         [HttpGet]
         public JsonResult Get()
         {
