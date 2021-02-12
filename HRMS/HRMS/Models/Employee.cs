@@ -17,5 +17,9 @@ namespace HRMS.Models
 
         public double Salary { get; set; }
 
+        public double Leaves { get; set; }
+
+        public double WorkingDays { get; set; }
+
     }
 }

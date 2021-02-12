@@ -14,12 +14,20 @@ namespace HRMS.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        List<Employee> _oEmployees = new List<Employee>() {
-        new Employee(){Name="mahesh",BirthDate= DateTime.Now,TIN="123",EmployeeType="Regular"},
-        new Employee(){Name="chandra",BirthDate= DateTime.Now,TIN="111",EmployeeType="Contract",Salary=1200.00}
+        List<Employee> _oEmployees = new List<Employee>()
+        {
+            new Employee(){Name="mahesh",BirthDate= DateTime.Now,TIN="123",EmployeeType="Regular"},
+            new Employee(){Name="chandra",BirthDate= DateTime.Now,TIN="111",EmployeeType="Contract",Salary=1200.00}
 
         };
 
+        //internal  List<Employee> _oEmployees;
+
+
+        //public EmployeeController()
+        //{
+        //    _oEmployees = new List<Employee>();
+        //}
 
 
         [HttpGet]
@@ -31,11 +39,26 @@ namespace HRMS.Controllers
         [HttpPost]
         public JsonResult Post(Employee emp)
         {
+            try
+            { 
+            double employeeBasicSalary=20000.00;
+            double monthSalary = 0;           
+            double noOfWorkingDays = 23;
 
+            if (emp.EmployeeType.Equals("Regular"))
+                monthSalary = employeeBasicSalary - (employeeBasicSalary / (noOfWorkingDays - emp.Leaves)) - (employeeBasicSalary * 0.12);
+            else if (emp.EmployeeType.Equals("Contractual"))
+                monthSalary = emp.WorkingDays * 500.00; 
+
+            emp.Salary = monthSalary;
             _oEmployees.Add(emp);
 
-            return new JsonResult("Employee Added Successfully..");
-
+            return new JsonResult("Employee Added Successfully.."+ Math.Round(monthSalary,2));
+            }catch(Exception ex)
+            {
+               Console.WriteLine(ex.Message);
+                return new JsonResult(ex.Message);
+            }
         }
 
     }
